@@ -51,10 +51,15 @@ def init_db():
 
 init_db()
 
+# ✅ ДВЕ РАЗНЫЕ МОДЕЛИ: для регистрации и для входа
 class UserCreate(BaseModel):
     username: str
     password: str
     role: str
+
+class UserLogin(BaseModel):  # ← Новая модель без role
+    username: str
+    password: str
 
 class WorkCreate(BaseModel):
     title: str
@@ -71,7 +76,6 @@ class FeedbackCreate(BaseModel):
     category: str
     text: str
 
-# 🔐 Простое хэширование через SHA-256 (никаких лимитов!)
 def hash_password(password: str) -> str:
     return hashlib.sha256(password.encode()).hexdigest()
 
@@ -113,7 +117,7 @@ def register(user: UserCreate):
     return {"message": "Аккаунт создан. Войдите."}
 
 @app.post("/auth/login")
-def login(user: UserCreate):
+def login(user: UserLogin):  # ← Используем UserLogin (без role)
     db = get_db()
     db_user = db.execute("SELECT * FROM users WHERE username = ?", (user.username,)).fetchone()
     db.close()
