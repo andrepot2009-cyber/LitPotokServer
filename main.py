@@ -8,7 +8,7 @@ from PyQt6.QtWidgets import (QApplication, QMainWindow, QLabel, QVBoxLayout,
 from PyQt6.QtCore import Qt
 from docx import Document
 
-SERVER_URL = "https://litpotokserver-2.onrender.com"
+SERVER_URL = "https://litpotokserver-3.onrender.com"
 
 
 class AuthWindow(QMainWindow):
